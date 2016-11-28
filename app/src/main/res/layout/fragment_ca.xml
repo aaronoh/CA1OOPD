@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ca_title_label" />
+
+    <EditText
+        android:id="@+id/ca_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter the CA Title" />
+    <EditText
+        android:id="@+id/ca_subject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter the CA Subject" />
+    <EditText
+        android:id="@+id/ca_Lecturer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter the CA Lecturer" />
+
+    <TextView
+        android:id="@+id/ca_details_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ca_details_label"
+        style="?android:listSeparatorTextViewStyle"
+        />
+
+    <EditText
+        android:layout_width="350dp"
+        android:layout_height="120dp"
+        android:id="@+id/ca_details"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"/>
+
+    <Button
+        android:id="@+id/ca_due_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp" />
+    <CheckBox
+        android:id="@+id/report_required"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Report Required?"
+        />
+
+
+</LinearLayout>

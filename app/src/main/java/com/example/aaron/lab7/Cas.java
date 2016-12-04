@@ -1,5 +1,7 @@
 package com.example.aaron.lab7;
 
+import android.content.ContentValues;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -8,82 +10,82 @@ import java.util.UUID;
  */
 
 public class Cas {
-    private UUID myId;
-    private String title;
-    private String subject;
-    private String lecturer;
-    private Date due_date;
-    private String details;
-    private Boolean report;
+    private int myId;
+    private String mTitle;
+    private String mSubject;
+    private String mLecturer;
+    private Date mDue_date;
+    private String mDetails;
+    private int mReport;
 
-    public Cas(){
-        setMyId(UUID.randomUUID());
-        due_date = new Date();
+    public Cas() {
+        mDue_date = new Date();
     }
 
 
-    public UUID getMyId() {
+    public int getMyId() {
         return myId;
     }
 
-    public void setMyId(UUID myId) {
+    public void setMyId(int myId) {
         this.myId = myId;
     }
 
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.mTitle = title;
     }
 
     public String getSubject() {
-        return subject;
+        return mSubject;
     }
 
     public void setSubject(String subject) {
-        this.subject = subject;
+        this.mSubject = subject;
     }
 
     public String getLecturer() {
-        return lecturer;
+        return mLecturer;
     }
 
     public void setLecturer(String lecturer) {
-        this.lecturer = lecturer;
+        this.mLecturer = lecturer;
     }
 
     public Date getDue_date() {
-        return due_date;
+        return mDue_date;
     }
 
     public void setDue_date(Date due_date) {
-        this.due_date = due_date;
+        this.mDue_date = due_date;
     }
 
     public String getDetails() {
-        return details;
+        return mDetails;
     }
 
     public void setDetails(String notes) {
-        this.details = notes;
+        this.mDetails = notes;
     }
 
-    public Boolean getReport() {
-        return report;
+    public int getReport() {
+        return mReport;
     }
 
-    public void setReport(Boolean report) {
-        this.report = report;
+    public void setReport(int report) {
+        this.mReport = report;
     }
+
 
     @Override
     public String toString() {
-        return this.title;
+        return this.mTitle;
 //        return "Cas{" +
 //                "myId=" + myId +
-//                ", title='" + title + '\'' +
+//                ", title='" + title + '\ '' +
 //                ", subject='" + subject + '\'' +
 //                ", lecturer='" + lecturer + '\'' +
 //                ", due_date=" + due_date +
@@ -91,4 +93,21 @@ public class Cas {
 //                ", report=" + report +
 //                '}';
     }
+
+    //places crime object variables into contentsvalues objects
+    public ContentValues toValues() {
+        ContentValues values = new ContentValues(7);
+
+        values.put(CaTable.CA_ID, myId);
+        values.put(CaTable.COLUMN_TITLE, mTitle);
+        values.put(CaTable.COLUMN_SUBJECT, mSubject);
+        values.put(CaTable.COLUMN_LECTURER, mLecturer);
+        values.put(CaTable.COLUMN_DUE_DATE, mDue_date);
+        values.put(CaTable.COLUMN_DETAILS, mDetails);
+        values.put(CaTable.COLUMN_REPORT, mReport);
+
+        return values;
+    }
+
+
 }

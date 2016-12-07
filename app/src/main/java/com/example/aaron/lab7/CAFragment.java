@@ -17,6 +17,7 @@ import android.widget.EditText;
  */
 
 public class CAFragment extends Fragment {
+    public final static String EXTRA_CA_ID = "com.example.aaron.lab7.ca_id";
     Cas newCa;
     EditText sTitleField;
     Button dueDateButton;
@@ -26,6 +27,7 @@ public class CAFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         newCa = new Cas();
+
 
     }
 

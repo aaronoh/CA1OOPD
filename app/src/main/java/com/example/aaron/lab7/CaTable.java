@@ -25,7 +25,7 @@ public class CaTable {
 
     //sql fro creating the table
     public static final String TABLE_CREATE = "CREATE TABLE " + TABLE_CA + " (" +
-            CA_ID + "TEXT PRIMARY KEY, " +
+            CA_ID + " INTEGER PRIMARY KEY, " +
             COLUMN_TITLE + " TEXT, " +
             COLUMN_SUBJECT + " TEXT, " +
             COLUMN_LECTURER + " TEXT, " +

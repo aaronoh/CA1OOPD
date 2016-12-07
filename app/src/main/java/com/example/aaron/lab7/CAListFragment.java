@@ -1,5 +1,6 @@
 package com.example.aaron.lab7;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -62,6 +63,11 @@ public class CAListFragment extends ListFragment {
     //logs last clicked
     public void onListItemClick(ListView l, View v, int position, long id) {
         Cas c = (Cas) (getListAdapter()).getItem(position);
+
+        Intent intent = new Intent(getActivity(), CAListActivity.class);
+        intent.putExtra(CAFragment.EXTRA_CA_ID, c.getMyId());
+        startActivity(intent);
+
         Log.d(TAG, c.getTitle() + " was clicked");
     }
 }

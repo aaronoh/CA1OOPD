@@ -66,11 +66,11 @@ public class CAModel {
 
             ca.setLecturer(cursor.getString(cursor.getColumnIndex(CaTable.COLUMN_LECTURER)));
 
-            ca.setDue_date(new Date(cursor.getColumnIndex(CaTable.COLUMN_DUE_DATE)));
+            ca.setDue_date(new Date());
 
             ca.setDetails(cursor.getString(cursor.getColumnIndex(CaTable.COLUMN_DETAILS)));
-
-            ca.setReport(cursor.getInt(cursor.getColumnIndex(CaTable.COLUMN_REPORT)));
+            int  reportChecked = cursor.getColumnIndex(CaTable.COLUMN_REPORT);
+            String reportString = cursor.getString(reportChecked);
 
             cas.add(ca);
         }
@@ -83,12 +83,15 @@ public class CAModel {
         for (int i = 10; i < 20; i++){
             ca.setMyId(i);
             ca.setTitle("Ca Title" + i);
-            ca.setReport(i%2);
+            ca.setReport(i%2 == 0);
             Date date = new Date();
             ca.setDue_date(date);
+
             try {
                 createCas(ca);
-            } catch (SQLiteException e){
+            }
+
+            catch (SQLiteException e){
                 e.printStackTrace();
             }
             //mCas.add(ca);

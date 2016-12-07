@@ -16,7 +16,7 @@ public class Cas {
     private String mLecturer;
     private Date mDue_date;
     private String mDetails;
-    private int mReport;
+    private boolean mReport;
 
     public Cas() {
         mDue_date = new Date();
@@ -71,11 +71,11 @@ public class Cas {
         this.mDetails = notes;
     }
 
-    public int getReport() {
+    public boolean getReport() {
         return mReport;
     }
 
-    public void setReport(int report) {
+    public void setReport(boolean report) {
         this.mReport = report;
     }
 
@@ -102,10 +102,10 @@ public class Cas {
         values.put(CaTable.COLUMN_TITLE, mTitle);
         values.put(CaTable.COLUMN_SUBJECT, mSubject);
         values.put(CaTable.COLUMN_LECTURER, mLecturer);
-        values.put(CaTable.COLUMN_DUE_DATE, mDue_date);
+        values.put(CaTable.COLUMN_DUE_DATE,String.valueOf(mDue_date));
         values.put(CaTable.COLUMN_DETAILS, mDetails);
-        values.put(CaTable.COLUMN_REPORT, mReport);
-
+        int caChecked = ((getReport())) ? 1:0;
+        values.put(CaTable.COLUMN_REPORT, caChecked);
         return values;
     }
 

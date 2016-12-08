@@ -70,4 +70,17 @@ public class CAListFragment extends ListFragment {
 
         Log.d(TAG, c.getTitle() + " was clicked");
     }
+    @Override
+    public void onResume(){
+        super.onResume();
+        updateUI();
+    }
+
+    public void updateUI(){
+        CAModel caModel = CAModel.get(getActivity());
+        ArrayList<Cas> mCas = caModel.getCas();
+
+        adapter = new CaAdapter(mCas);
+        setListAdapter(adapter);
+    }
 }

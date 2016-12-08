@@ -37,9 +37,13 @@ public class CAModel {
         seedDatabase();
     }
 
-    public void open(){mDatabase = mDbHelper.getReadableDatabase(); }
+    public void open() {
+        mDatabase = mDbHelper.getReadableDatabase();
+    }
 
-    public void close(){mDbHelper.close();}
+    public void close() {
+        mDbHelper.close();
+    }
 
     //get
     public static CAModel get(Context c) {
@@ -48,15 +52,16 @@ public class CAModel {
         }
         return sCAModel;
     }
+
     //returns list of all cas in db
-    public ArrayList<Cas> getCas(){
+    public ArrayList<Cas> getCas() {
 
         ArrayList<Cas> cas = new ArrayList<>();
         //check catable for definition of TABLE_CA and ALL_COLLUMNS
-        Cursor cursor = mDatabase.query(CaTable.TABLE_CA, CaTable.ALL_COLUMNS,null, null, null, null, null);
+        Cursor cursor = mDatabase.query(CaTable.TABLE_CA, CaTable.ALL_COLUMNS, null, null, null, null, null);
 
         //cursor = list of rows from db
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             Cas ca = new Cas();
             ca.setMyId(cursor.getInt(cursor.getColumnIndex(CaTable.CA_ID)));
 
@@ -69,7 +74,7 @@ public class CAModel {
             ca.setDue_date(new Date());
 
             ca.setDetails(cursor.getString(cursor.getColumnIndex(CaTable.COLUMN_DETAILS)));
-            int  reportChecked = cursor.getColumnIndex(CaTable.COLUMN_REPORT);
+            int reportChecked = cursor.getColumnIndex(CaTable.COLUMN_REPORT);
             String reportString = cursor.getString(reportChecked);
 
             cas.add(ca);
@@ -80,26 +85,33 @@ public class CAModel {
 
     public void seedDatabase() {
         Cas ca = new Cas();
-        for (int i = 10; i < 20; i++){
+        for (int i = 50; i < 60; i++) {
             ca.setMyId(i);
             ca.setTitle("Ca Title" + i);
-            ca.setReport(i%2 == 0);
+            ca.setReport(i % 2 == 0);
             Date date = new Date();
             ca.setDue_date(date);
 
             try {
                 createCas(ca);
-            }
-
-            catch (SQLiteException e){
+            } catch (SQLiteException e) {
                 e.printStackTrace();
             }
             //mCas.add(ca);
         }
     }
+
     public Cas createCas(Cas ca) {
         ContentValues values = ca.toValues();
         mDatabase.insert(CaTable.TABLE_CA, null, values);
         return ca;
+    }
+
+    public Cas getCa(String caId) {
+    }
+
+    public void updateCa(Cas ca) {
+        ContentValues values = ca.toValues();
+        int result = mDatabase.update(CaTable.TABLE_CA, values, "id = ?", new String[]{ca.getId()});
     }
 }

@@ -18,25 +18,27 @@ import android.widget.EditText;
 
 public class CAFragment extends Fragment {
     public final static String EXTRA_CA_ID = "com.example.aaron.lab7.ca_id";
-    Cas newCa;
-    EditText sTitleField;
-    Button dueDateButton;
-    CheckBox reportCheckBox;
+    private Cas newCa;
+    private EditText sTitleField;
+    private Button dueDateButton;
+    private CheckBox reportCheckBox;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        newCa = new Cas();
+        String caId = getActivity().getIntent().getStringExtra(EXTRA_CA_ID);
+        newCa = CAModel.get(getActivity()).getCa(caId);
 
 
     }
-
+    @Override
+    //configure fragment view
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_ca, parent, false);
 
         dueDateButton = (Button) v.findViewById(R.id.ca_due_date);
         dueDateButton.setText(newCa.getDue_date().toString());
-        dueDateButton.setEnabled(false);
+        dueDateButton.setEnabled(true);
 
         reportCheckBox = (CheckBox)v.findViewById(R.id.report_required);
         reportCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -56,6 +58,8 @@ public class CAFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 newCa.setTitle(s.toString());
+                CAModel caModel = CAModel.get(getActivity());
+                caModel.updateCa(newCa);
             }
 
             @Override

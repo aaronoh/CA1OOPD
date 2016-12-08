@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class CAListFragment extends ListFragment {
     private static final String TAG = "CAListFragment";
     private ArrayList<Cas> mCas;
-
+    private CaAdapter adapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +30,7 @@ public class CAListFragment extends ListFragment {
         mCas = CAModel.get(getActivity()).getCas();
 
 //Using CAAdapter to retrieve content from ca objects and place in list items
-        CaAdapter adapter = new CaAdapter(mCas);
+        adapter = new CaAdapter(mCas);
         setListAdapter(adapter);
     }//only used within this class, inner class
 
@@ -60,14 +60,14 @@ public class CAListFragment extends ListFragment {
         }
     }
 
-    //logs last clicked
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        Cas c = (Cas) (getListAdapter()).getItem(position);
 
+    public void onListItemClick(ListView l, View v, int position, long id) {
         Intent intent = new Intent(getActivity(), CAListActivity.class);
-        intent.putExtra(CAFragment.EXTRA_CA_ID, c.getMyId());
+        intent.putExtra(CAFragment.EXTRA_CA_ID, position);
         startActivity(intent);
 
+        //logs last clicked
+        Cas c = (Cas) (getListAdapter()).getItem(position);
         Log.d(TAG, c.getTitle() + " was clicked");
     }
     @Override

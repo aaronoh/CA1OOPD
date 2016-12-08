@@ -17,7 +17,7 @@ import java.util.Date;
  */
 
 public class CAModel {
-
+    private ArrayList<Cas> mCasList;
     private SQLiteDatabase mDatabase;
     private SQLiteOpenHelper mDbHelper;
 
@@ -28,7 +28,7 @@ public class CAModel {
     //singleton pattern
     private CAModel(Context appContext) {
         mAppContext = appContext;
-
+        this.mCasList = getCas();
         //instantiate db helper, calls onCreate i db needs to be set up
         mDbHelper = new CaDbHelper(appContext);
         //returns db object, run queries on object
@@ -83,23 +83,23 @@ public class CAModel {
         return cas;
     }
 
-    public void seedDatabase() {
-        Cas ca = new Cas();
-        for (int i = 50; i < 60; i++) {
-            ca.setMyId(i);
-            ca.setTitle("Ca Title" + i);
-            ca.setReport(i % 2 == 0);
-            Date date = new Date();
-            ca.setDue_date(date);
-
-            try {
-                createCas(ca);
-            } catch (SQLiteException e) {
-                e.printStackTrace();
-            }
-            //mCas.add(ca);
-        }
-    }
+//    public void seedDatabase() {
+//        Cas ca = new Cas();
+//        for (int i = 50; i < 60; i++) {
+//            ca.setMyId(i);
+//            ca.setTitle("Ca Title" + i);
+//            ca.setReport(i % 2 == 0);
+//            Date date = new Date();
+//            ca.setDue_date(date);
+//
+//            try {
+//                createCas(ca);
+//            } catch (SQLiteException e) {
+//                e.printStackTrace();
+//            }
+//            //mCas.add(ca);
+//        }
+//    }
 
     public Cas createCas(Cas ca) {
         ContentValues values = ca.toValues();
@@ -108,10 +108,12 @@ public class CAModel {
     }
 
     public Cas getCa(String caId) {
+        return this.mCasList.get(position);
     }
+
 
     public void updateCa(Cas ca) {
         ContentValues values = ca.toValues();
-        int result = mDatabase.update(CaTable.TABLE_CA, values, "id = ?", new String[]{ca.getId()});
+        long result = mDatabase.update(CaTable.TABLE_CA, values, "id = ?", new String []{ca.getMyId()});
     }
 }

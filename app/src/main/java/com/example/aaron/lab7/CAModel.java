@@ -28,13 +28,13 @@ public class CAModel {
     //singleton pattern
     private CAModel(Context appContext) {
         mAppContext = appContext;
-        this.mCasList = getCas();
         //instantiate db helper, calls onCreate i db needs to be set up
         mDbHelper = new CaDbHelper(appContext);
         //returns db object, run queries on object
         mDatabase = mDbHelper.getWritableDatabase();
         //seed list of crimes
-        //seedDatabase();
+        seedDatabase();
+        this.mCasList = getCas();
     }
 
     public void open() {
@@ -83,23 +83,23 @@ public class CAModel {
         return cas;
     }
 
-//    public void seedDatabase() {
-//        Cas ca = new Cas();
-//        for (int i = 50; i < 60; i++) {
-//            ca.setMyId(i);
-//            ca.setTitle("Ca Title" + i);
-//            ca.setReport(i % 2 == 0);
-//            Date date = new Date();
-//            ca.setDue_date(date);
-//
-//            try {
-//                createCas(ca);
-//            } catch (SQLiteException e) {
-//                e.printStackTrace();
-//            }
-//            //mCas.add(ca);
-//        }
-//    }
+    public void seedDatabase() {
+        Cas ca = new Cas();
+        for (int i = 50; i < 60; i++) {
+            ca.setMyId(i);
+            ca.setTitle("Ca Title" + i);
+            ca.setReport(i % 2 == 0);
+            Date date = new Date();
+            ca.setDue_date(date);
+
+            try {
+                createCas(ca);
+            } catch (SQLiteException e) {
+                e.printStackTrace();
+            }
+            //mCas.add(ca);
+        }
+    }
 
     public Cas createCas(Cas ca) {
         ContentValues values = ca.toValues();

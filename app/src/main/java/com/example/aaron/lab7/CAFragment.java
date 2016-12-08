@@ -26,11 +26,10 @@ public class CAFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int position = getActivity().getIntent().getIntExtra(EXTRA_CA_ID, -1);
+        int position = getArguments().getInt(EXTRA_CA_ID, -1);
         if (position != -1) {
             newCa = CAModel.get(getActivity()).getCa(position);
         }
-        newCa = CAModel.get(getActivity()).getCa(position);
     }
 
     @Override

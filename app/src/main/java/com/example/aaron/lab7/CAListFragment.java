@@ -62,9 +62,18 @@ public class CAListFragment extends ListFragment {
 
 
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Intent intent = new Intent(getActivity(), CAListActivity.class);
-        intent.putExtra(CAFragment.EXTRA_CA_ID, position);
-        startActivity(intent);
+//        Intent intent = new Intent(getActivity(), CAFragment.class);
+//        intent.putExtra(CAFragment.EXTRA_CA_ID, position);
+//        startActivity(intent);
+        Bundle bundle = new Bundle();
+        bundle.putInt(CAFragment.EXTRA_CA_ID, position);
+        CAFragment fragment = new CAFragment();
+        fragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .addToBackStack(null)
+                .commit();
 
         //logs last clicked
         Cas c = (Cas) (getListAdapter()).getItem(position);

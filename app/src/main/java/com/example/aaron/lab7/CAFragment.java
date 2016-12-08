@@ -26,11 +26,13 @@ public class CAFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String caId = getActivity().getIntent().getStringExtra(EXTRA_CA_ID);
-        newCa = CAModel.get(getActivity()).getCa(caId);
-
-
+        int position = getActivity().getIntent().getIntExtra(EXTRA_CA_ID, -1);
+        if (position != -1) {
+            newCa = CAModel.get(getActivity()).getCa(position);
+        }
+        newCa = CAModel.get(getActivity()).getCa(position);
     }
+
     @Override
     //configure fragment view
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -40,7 +42,7 @@ public class CAFragment extends Fragment {
         dueDateButton.setText(newCa.getDue_date().toString());
         dueDateButton.setEnabled(true);
 
-        reportCheckBox = (CheckBox)v.findViewById(R.id.report_required);
+        reportCheckBox = (CheckBox) v.findViewById(R.id.report_required);
         reportCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -66,7 +68,14 @@ public class CAFragment extends Fragment {
             public void afterTextChanged(Editable s) {
 
             }
+
         });
+
+        if (newCa != null) {
+            sTitleField.setText(newCa.getTitle());
+            dueDateButton.setText(newCa.getDue_date().toString());
+        }
+
         return v;
     }
 }

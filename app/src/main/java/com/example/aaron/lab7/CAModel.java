@@ -34,7 +34,7 @@ public class CAModel {
         //returns db object, run queries on object
         mDatabase = mDbHelper.getWritableDatabase();
         //seed list of crimes
-        seedDatabase();
+        //seedDatabase();
     }
 
     public void open() {
@@ -107,13 +107,13 @@ public class CAModel {
         return ca;
     }
 
-    public Cas getCa(String caId) {
+    public Cas getCa(int position) {
         return this.mCasList.get(position);
     }
 
 
     public void updateCa(Cas ca) {
         ContentValues values = ca.toValues();
-        long result = mDatabase.update(CaTable.TABLE_CA, values, "id = ?", new String []{ca.getMyId()});
+        long result = mDatabase.update(CaTable.TABLE_CA, values, "id = ?", new String []{String.valueOf(ca.getMyId())});
     }
 }

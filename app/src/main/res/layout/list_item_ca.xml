@@ -72,20 +72,9 @@
         android:padding="4dp"
         android:layout_alignBottom="@+id/ca_list_item_detailsTextView"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        />
 
 
-    <!--<ImageButton-->
-        <!--android:id="@+id/add_Button"-->
-        <!--android:layout_width="50dp"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_marginBottom="16dp"-->
-        <!--android:layout_marginRight="16dp"-->
-        <!--android:clickable="true"-->
-        <!--android:background="@drawable/add"-->
-        <!--android:padding="15dp"-->
-        <!--/>-->
 
 </RelativeLayout>

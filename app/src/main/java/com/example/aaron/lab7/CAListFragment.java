@@ -56,6 +56,15 @@ public class CAListFragment extends ListFragment {
             CheckBox reportChecBox = (CheckBox) convertView.findViewById(R.id.ca_list_item_reportCheckbox);
             reportChecBox.setChecked(c.getReport());
 
+            TextView subjectTextView = (TextView) convertView.findViewById(R.id.ca_list_item_subjectTextView);
+            subjectTextView.setText(c.getSubject());
+
+            TextView lecturerTextView = (TextView) convertView.findViewById(R.id.ca_list_item_lecturerTextView);
+            lecturerTextView.setText(c.getLecturer());
+
+            TextView detailsTextView = (TextView) convertView.findViewById(R.id.ca_list_item_detailsTextView);
+            detailsTextView.setText(c.getDetails());
+
             return convertView;
         }
     }

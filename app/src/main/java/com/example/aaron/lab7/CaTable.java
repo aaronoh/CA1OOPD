@@ -33,6 +33,7 @@ public class CaTable {
             COLUMN_DETAILS + " TEXT, " +
             COLUMN_REPORT + " INTEGER " + ")";
 
+
     public static final String SQL_DELETE = "DROP TABLE " + TABLE_CA;
 
 }

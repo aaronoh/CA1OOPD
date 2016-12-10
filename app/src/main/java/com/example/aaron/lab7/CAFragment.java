@@ -20,6 +20,9 @@ public class CAFragment extends Fragment {
     public final static String EXTRA_CA_ID = "com.example.aaron.lab7.ca_id";
     private Cas newCa;
     private EditText sTitleField;
+    private EditText sSubjectField;
+    private EditText sLecturerField;
+    private EditText sDetailsField;
     private Button dueDateButton;
     private CheckBox reportCheckBox;
 
@@ -69,9 +72,75 @@ public class CAFragment extends Fragment {
             }
 
         });
+        sSubjectField = (EditText) v.findViewById(R.id.ca_subject);
+        sSubjectField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                newCa.setSubject(s.toString());
+                CAModel caModel = CAModel.get(getActivity());
+                caModel.updateCa(newCa);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+        });
+
+        sLecturerField = (EditText) v.findViewById(R.id.ca_Lecturer);
+        sLecturerField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                newCa.setLecturer(s.toString());
+                CAModel caModel = CAModel.get(getActivity());
+                caModel.updateCa(newCa);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+        });
+
+        sDetailsField = (EditText) v.findViewById(R.id.ca_details);
+        sDetailsField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                newCa.setDetails(s.toString());
+                CAModel caModel = CAModel.get(getActivity());
+                caModel.updateCa(newCa);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+        });
+
+        //populates fields for editing
         if (newCa != null) {
             sTitleField.setText(newCa.getTitle());
+            sLecturerField.setText(newCa.getLecturer());
+            sSubjectField.setText(newCa.getSubject());
+            sDetailsField.setText(newCa.getDetails());
             dueDateButton.setText(newCa.getDue_date().toString());
         }
 

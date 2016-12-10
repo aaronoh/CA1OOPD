@@ -34,4 +34,38 @@
         android:paddingTop="4dp"
         android:text="CA Due Date"
         />
+    <TextView
+        android:id="@+id/ca_list_item_subjectTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ca_list_item_dateTextView"
+        android:layout_toLeftOf="@+id/ca_list_item_reportCheckbox"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="4dp"
+        android:text="CA Subject"
+        />
+    <TextView
+    android:id="@+id/ca_list_item_lecturerTextView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/ca_list_item_subjectTextView"
+    android:layout_toLeftOf="@+id/ca_list_item_reportCheckbox"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    android:paddingTop="4dp"
+    android:text="CA Lecturer"
+    />
+
+    <TextView
+        android:id="@+id/ca_list_item_detailsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ca_list_item_lecturerTextView"
+        android:layout_toLeftOf="@+id/ca_list_item_reportCheckbox"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="4dp"
+        android:text="CA Details"
+        />
 </RelativeLayout>

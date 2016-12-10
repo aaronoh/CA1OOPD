@@ -1,5 +1,6 @@
 package com.example.aaron.lab7;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,6 +12,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 /**
  * Created by Aaron on 09/11/2016.
@@ -25,11 +28,22 @@ public class CAFragment extends Fragment {
     private EditText sDetailsField;
     private Button dueDateButton;
     private CheckBox reportCheckBox;
+    private Button saveButton;
+
+    public static CAFragment newInstance(int position) {
+
+        Bundle args = new Bundle();
+        args.putInt(EXTRA_CA_ID, position);
+
+        CAFragment fragment = new CAFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int position = getArguments().getInt(EXTRA_CA_ID, -1);
+        int position = getArguments().getInt(EXTRA_CA_ID);
         if (position != -1) {
             newCa = CAModel.get(getActivity()).getCa(position);
         }
@@ -134,6 +148,36 @@ public class CAFragment extends Fragment {
             }
 
         });
+
+
+        Button saveButton = (Button) v.findViewById(R.id.save_button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            //return to previous fragment
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().popBackStack();
+                Toast.makeText(getContext(),"Changes Saved",Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
+//            ImageButton add = (ImageButton) v.findViewById(R.id.add_Button);
+//            saveButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                //return to previous fragment
+//                public void onClick(View v) {
+//                    getActivity().getSupportFragmentManager()
+//                            .beginTransaction()
+//                            .replace(R.id.fragmentContainer, CAFragment.newInstance(1))
+//                            .addToBackStack(null)
+//                            .commit();
+//
+//                }
+//            });
+
+
+
 
         //populates fields for editing
         if (newCa != null) {

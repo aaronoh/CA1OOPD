@@ -55,5 +55,11 @@
         android:text="Report Required?"
         />
 
+    <Button
+        android:text="Save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/save_button" />
+
 
 </LinearLayout>

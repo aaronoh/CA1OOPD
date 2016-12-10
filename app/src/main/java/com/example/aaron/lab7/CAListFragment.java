@@ -21,6 +21,7 @@ public class CAListFragment extends ListFragment {
     private static final String TAG = "CAListFragment";
     private ArrayList<Cas> mCas;
     private CaAdapter adapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,16 +72,9 @@ public class CAListFragment extends ListFragment {
 
 
     public void onListItemClick(ListView l, View v, int position, long id) {
-//        Intent intent = new Intent(getActivity(), CAFragment.class);
-//        intent.putExtra(CAFragment.EXTRA_CA_ID, position);
-//        startActivity(intent);
-        Bundle bundle = new Bundle();
-        bundle.putInt(CAFragment.EXTRA_CA_ID, position);
-        CAFragment fragment = new CAFragment();
-        fragment.setArguments(bundle);
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragmentContainer, fragment)
+                .replace(R.id.fragmentContainer, CAFragment.newInstance(position))
                 .addToBackStack(null)
                 .commit();
 
@@ -88,13 +82,14 @@ public class CAListFragment extends ListFragment {
         Cas c = (Cas) (getListAdapter()).getItem(position);
         Log.d(TAG, c.getTitle() + " was clicked");
     }
+
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         updateUI();
     }
 
-    public void updateUI(){
+    public void updateUI() {
         CAModel caModel = CAModel.get(getActivity());
         ArrayList<Cas> mCas = caModel.getCas();
 

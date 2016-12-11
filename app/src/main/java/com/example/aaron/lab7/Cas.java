@@ -22,7 +22,7 @@ public class Cas {
         mDue_date = new Date();
     }
 
-
+    //getters and setters
     public int getMyId() {
         return myId;
     }

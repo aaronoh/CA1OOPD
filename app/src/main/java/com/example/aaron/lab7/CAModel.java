@@ -28,7 +28,7 @@ public class CAModel {
     //singleton pattern
     private CAModel(Context appContext) {
         mAppContext = appContext;
-        //instantiate db helper, calls onCreate i db needs to be set up
+        //instantiate db helper, calls onCreate if db needs to be set up
         mDbHelper = new CaDbHelper(appContext);
         //returns db object, run queries on object
         mDatabase = mDbHelper.getWritableDatabase();
@@ -82,12 +82,16 @@ public class CAModel {
         cursor.close();
         return cas;
     }
+    //seed database with unique titles and Subject/Lecturer/Details/Current Date
 
     public void seedDatabase() {
         Cas ca = new Cas();
         for (int i = 50; i < 60; i++) {
             ca.setMyId(i);
             ca.setTitle("Ca Title" + i);
+            ca.setSubject("Ca Subject");
+            ca.setLecturer("Ca Lecturer");
+            ca.setDetails("Details of CA Requirements");
             ca.setReport(i % 2 == 0);
             Date date = new Date();
             ca.setDue_date(date);
@@ -100,13 +104,13 @@ public class CAModel {
             //mCas.add(ca);
         }
     }
-
+//insert ca into db
     public Cas createCas(Cas ca) {
         ContentValues values = ca.toValues();
         mDatabase.insert(CaTable.TABLE_CA, null, values);
         return ca;
     }
-
+        //find numeric position in list for ca
     public Cas getCa(int position) {
         return this.mCasList.get(position);
     }

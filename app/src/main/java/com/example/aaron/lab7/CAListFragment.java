@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 public class CAListFragment extends ListFragment {
     private static final String TAG = "CAListFragment";
+    //local array list of cas, populated by db
     private ArrayList<Cas> mCas;
     private CaAdapter adapter;
 
@@ -47,7 +48,7 @@ public class CAListFragment extends ListFragment {
             }
             //configuring view for individual ca
             Cas c = getItem(position);
-
+       // getting fielkds/values
             TextView titleTextView = (TextView) convertView.findViewById(R.id.ca_list_item_titleTextView);
             titleTextView.setText(c.getTitle());
 
@@ -72,9 +73,14 @@ public class CAListFragment extends ListFragment {
 
 
     public void onListItemClick(ListView l, View v, int position, long id) {
+        //Bundle -> Passing data between activities
+        Bundle bundle = new Bundle();
+        bundle.putInt(CAFragment.EXTRA_CA_ID, position);
+        CAFragment fragment = new CAFragment();
+        fragment.setArguments(bundle);
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragmentContainer, CAFragment.newInstance(position))
+                .replace(R.id.fragmentContainer, fragment)
                 .addToBackStack(null)
                 .commit();
 
@@ -82,6 +88,7 @@ public class CAListFragment extends ListFragment {
         Cas c = (Cas) (getListAdapter()).getItem(position);
         Log.d(TAG, c.getTitle() + " was clicked");
     }
+
 
     @Override
     public void onResume() {
@@ -96,4 +103,5 @@ public class CAListFragment extends ListFragment {
         adapter = new CaAdapter(mCas);
         setListAdapter(adapter);
     }
+
 }

@@ -1,9 +1,11 @@
 package com.example.aaron.lab7;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -150,7 +153,30 @@ public class CAFragment extends Fragment {
 
         });
 
-    //Button brings the application back one stpoe in the stack, returning to the full list
+
+        //Button launches date picker
+        Button dateButton = (Button) v.findViewById(R.id.ca_due_date);
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            //return to previous fragment
+            public void onClick(View v) {
+                DatePicker dp = new DatePicker(getActivity());
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity())
+                        .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dateButton.setText();
+                            }
+                        })
+                        .setCustomView(dp)
+                        .setCancelable(true)
+                        .create()
+                        .show();
+
+            }
+        });
+
+
+        //Button brings the application back one stpoe in the stack, returning to the full list
         Button saveButton = (Button) v.findViewById(R.id.save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override

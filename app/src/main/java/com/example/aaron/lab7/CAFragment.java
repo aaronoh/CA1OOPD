@@ -2,10 +2,8 @@ package com.example.aaron.lab7;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -24,7 +22,7 @@ import android.widget.Toast;
 
 public class CAFragment extends Fragment {
     public final static String EXTRA_CA_ID = "com.example.aaron.lab7.ca_id";
-    private Cas newCa;
+    private Cas savedCa;
     private EditText sTitleField;
     private EditText sSubjectField;
     private EditText sLecturerField;
@@ -47,7 +45,7 @@ public class CAFragment extends Fragment {
         super.onCreate(savedInstanceState);
         int position = getArguments().getInt(EXTRA_CA_ID);
         if (position != -1) {
-            newCa = CAModel.get(getActivity()).getCa(position);
+            savedCa = CAModel.get(getActivity()).getCa(position);
         }
     }
 
@@ -56,8 +54,8 @@ public class CAFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_ca, parent, false);
             final Button dueDateButton = (Button) v.findViewById(R.id.ca_due_date);
-        if (newCa != null) {
-            dueDateButton.setText(newCa.getDue_date().toString());
+        if (savedCa != null) {
+            dueDateButton.setText(savedCa.getDue_date().toString());
             dueDateButton.setEnabled(true);
             dueDateButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -82,12 +80,12 @@ public class CAFragment extends Fragment {
         reportCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (newCa != null) {
-                    newCa.setReport(isChecked);
+                if (savedCa != null) {
+                    savedCa.setReport(isChecked);
                 }
             }
         });
-//finds each element base don id, listens for changes to text, sets the text entry to the field of the newCa object
+//finds each element base don id, listens for changes to text, sets the text entry to the field of the savedCa object
             sTitleField = (EditText) v.findViewById(R.id.ca_title);
             sTitleField.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -97,16 +95,16 @@ public class CAFragment extends Fragment {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (newCa != null) {
-                        newCa.setTitle(s.toString());
+                    if (savedCa != null) {
+                        savedCa.setTitle(s.toString());
                     }
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    if (newCa != null) {
+                    if (savedCa != null) {
                         CAModel caModel = CAModel.get(getActivity());
-                        caModel.updateCa(newCa);
+                        caModel.updateCa(savedCa);
                     }
                     }
 
@@ -120,16 +118,16 @@ public class CAFragment extends Fragment {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (newCa != null) {
-                        newCa.setSubject(s.toString());
+                    if (savedCa != null) {
+                        savedCa.setSubject(s.toString());
                     }
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    if (newCa != null) {
+                    if (savedCa != null) {
                         CAModel caModel = CAModel.get(getActivity());
-                        caModel.updateCa(newCa);
+                        caModel.updateCa(savedCa);
                     }
                 }
 
@@ -144,16 +142,16 @@ public class CAFragment extends Fragment {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (newCa != null) {
-                        newCa.setLecturer(s.toString());
+                    if (savedCa != null) {
+                        savedCa.setLecturer(s.toString());
                     }
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    if (newCa != null) {
+                    if (savedCa != null) {
                         CAModel caModel = CAModel.get(getActivity());
-                        caModel.updateCa(newCa);
+                        caModel.updateCa(savedCa);
                     }
                     }
 
@@ -168,17 +166,17 @@ public class CAFragment extends Fragment {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (newCa != null) {
-                        newCa.setDetails(s.toString());
+                    if (savedCa != null) {
+                        savedCa.setDetails(s.toString());
                     }
 
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    if (newCa != null) {
+                    if (savedCa != null) {
                         CAModel caModel = CAModel.get(getActivity());
-                        caModel.updateCa(newCa);
+                        caModel.updateCa(savedCa);
                     }
                 }
 
@@ -186,25 +184,37 @@ public class CAFragment extends Fragment {
 
 
             //Button brings the application back one stpoe in the stack, returning to the full list
-            Button saveButton = (Button) v.findViewById(R.id.save_button);
+            final Button saveButton = (Button) v.findViewById(R.id.save_button);
+        if (savedCa != null) {
+            saveButton.setText("Update");
+        }
+        else{
+            saveButton.setText("Add");
+        }
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 //return to previous fragment
                 public void onClick(View v) {
                     getActivity().getSupportFragmentManager().popBackStack();
                     //toast message to twll user that the changes entered before pressing the button were saved
-                    Toast.makeText(getContext(), "Changes Saved", Toast.LENGTH_SHORT).show();
+                    if (savedCa != null) {
+                        Toast.makeText(getContext(), "Changes Saved", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(getContext(), "CA Added", Toast.LENGTH_SHORT).show();
+                    }
+
 
                 }
             });
 
             //populates fields for editing
-            if (newCa != null) {
-                sTitleField.setText(newCa.getTitle());
-                sLecturerField.setText(newCa.getLecturer());
-                sSubjectField.setText(newCa.getSubject());
-                sDetailsField.setText(newCa.getDetails());
-                dueDateButton.setText(newCa.getDue_date().toString());
+            if (savedCa != null) {
+                sTitleField.setText(savedCa.getTitle());
+                sLecturerField.setText(savedCa.getLecturer());
+                sSubjectField.setText(savedCa.getSubject());
+                sDetailsField.setText(savedCa.getDetails());
+                dueDateButton.setText(savedCa.getDue_date().toString());
             }
 
         return v;

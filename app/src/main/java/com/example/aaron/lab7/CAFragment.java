@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,11 +97,11 @@ public class CAFragment extends Fragment implements View.OnClickListener {
             sLecturerField.setText(savedCa.getLecturer());
             sSubjectField.setText(savedCa.getSubject());
             sDetailsField.setText(savedCa.getDetails());
-            dueDateButton.setText("DD/MM/YYYY");
+            dueDateButton.setText(dueDateButton.getText().toString());
             saveButton.setText("Update CA");
         }
         else {
-            dueDateButton.setText(dueDateButton.getText().toString());
+            dueDateButton.setText("DD/MM/YYYY");
             saveButton.setText("Create CA");
         }
 
@@ -121,7 +122,10 @@ public class CAFragment extends Fragment implements View.OnClickListener {
             try {
                 d = dateFormat.parse(dueDateButton.getText().toString());
             } catch (Exception e) {
+                Log.e("CaList", "exception", e);
+
             }
+            Log.d("Date", "value: " + d.toString());
             savedCa.setDue_date(d);
             savedCa.setTitle(sTitleField.getText().toString());
             savedCa.setReport(reportCheckBox.isChecked());

@@ -81,7 +81,7 @@ public class CAFragment extends Fragment implements View.OnClickListener {
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                dueDateButton.setText(dp.getDayOfMonth() + "/" + dp.getMonth() + "/" + dp.getYear());
+                                dueDateButton.setText(dp.getDayOfMonth() + "/" + (dp.getMonth()+1) + "/" + dp.getYear());
                                 dialog.dismiss();
                             }
                         })
@@ -97,7 +97,7 @@ public class CAFragment extends Fragment implements View.OnClickListener {
             sLecturerField.setText(savedCa.getLecturer());
             sSubjectField.setText(savedCa.getSubject());
             sDetailsField.setText(savedCa.getDetails());
-            dueDateButton.setText(dueDateButton.getText().toString());
+            dueDateButton.setText(savedCa.getDue_date().toString());
             saveButton.setText("Update CA");
         }
         else {
@@ -125,9 +125,12 @@ public class CAFragment extends Fragment implements View.OnClickListener {
                 Log.e("CaList", "exception", e);
 
             }
-            Log.d("Date", "value: " + d.toString());
-            savedCa.setDue_date(d);
+            if (d != null) {
+                savedCa.setDue_date(d);
+            }
             savedCa.setTitle(sTitleField.getText().toString());
+            savedCa.setSubject(sSubjectField.getText().toString());
+            savedCa.setLecturer(sLecturerField.getText().toString());
             savedCa.setReport(reportCheckBox.isChecked());
             savedCa.setDetails(sDetailsField.getText().toString());
             caModel.updateCa(savedCa);
@@ -136,10 +139,25 @@ public class CAFragment extends Fragment implements View.OnClickListener {
         else {
             Toast.makeText(getContext(), "CA Added", Toast.LENGTH_SHORT).show();
             Cas ca = new Cas();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+            Date d = null;
+            try {
+                d = dateFormat.parse(dueDateButton.getText().toString());
+            } catch (Exception e) {
+                Log.e("CaList", "exception", e);
+
+            }
+            if (d != null) {
+                ca.setDue_date(d);
+            }
             ca.setTitle(ca.getTitle());
+            savedCa.setSubject(sSubjectField.getText().toString());
+            ca.setLecturer(sLecturerField.getText().toString());
             ca.setReport(reportCheckBox.isChecked());
             ca.setDetails(sDetailsField.getText().toString());
-            caModel.updateCa(ca);
+            //caModel.add(ca);
+            // need to create add method in model
         }
         getActivity().getSupportFragmentManager().popBackStack();
     }

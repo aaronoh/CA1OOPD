@@ -1,11 +1,11 @@
 package com.example.aaron.lab7;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -29,7 +29,6 @@ public class CAFragment extends Fragment {
     private EditText sSubjectField;
     private EditText sLecturerField;
     private EditText sDetailsField;
-    private Button dueDateButton;
     private CheckBox reportCheckBox;
     private Button saveButton;
 
@@ -57,9 +56,26 @@ public class CAFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_ca, parent, false);
 
-        dueDateButton = (Button) v.findViewById(R.id.ca_due_date);
+        final Button dueDateButton = (Button) v.findViewById(R.id.ca_due_date);
         dueDateButton.setText(newCa.getDue_date().toString());
         dueDateButton.setEnabled(true);
+        dueDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final DatePicker dp = new DatePicker(getActivity());
+                new AlertDialog.Builder(getActivity())
+                        .setView(dp)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dueDateButton.setText(dp.getDayOfMonth() + "/" + dp.getMonth() + "/" + dp.getYear());
+                                dialog.dismiss();
+                            }
+                        })
+                        .create()
+                        .show();
+            }
+        });
 
         reportCheckBox = (CheckBox) v.findViewById(R.id.report_required);
         reportCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -154,26 +170,6 @@ public class CAFragment extends Fragment {
         });
 
 
-        //Button launches date picker
-        Button dateButton = (Button) v.findViewById(R.id.ca_due_date);
-        dateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            //return to previous fragment
-            public void onClick(View v) {
-                DatePicker dp = new DatePicker(getActivity());
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity())
-                        .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                dateButton.setText();
-                            }
-                        })
-                        .setCustomView(dp)
-                        .setCancelable(true)
-                        .create()
-                        .show();
-
-            }
-        });
 
 
         //Button brings the application back one stpoe in the stack, returning to the full list

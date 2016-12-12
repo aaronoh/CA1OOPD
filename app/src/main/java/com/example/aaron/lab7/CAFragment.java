@@ -55,143 +55,144 @@ public class CAFragment extends Fragment {
     //configure fragment view
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_ca, parent, false);
-
-        final Button dueDateButton = (Button) v.findViewById(R.id.ca_due_date);
-        dueDateButton.setText(newCa.getDue_date().toString());
-        dueDateButton.setEnabled(true);
-        dueDateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final DatePicker dp = new DatePicker(getActivity());
-                new AlertDialog.Builder(getActivity())
-                        .setView(dp)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dueDateButton.setText(dp.getDayOfMonth() + "/" + dp.getMonth() + "/" + dp.getYear());
-                                dialog.dismiss();
-                            }
-                        })
-                        .create()
-                        .show();
-            }
-        });
-
-        reportCheckBox = (CheckBox) v.findViewById(R.id.report_required);
-        reportCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                newCa.setReport(isChecked);
-            }
-        });
-//finds each element base don id, listens for changes to text, sets the text entry to the field of the newCa object
-        sTitleField = (EditText) v.findViewById(R.id.ca_title);
-        sTitleField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                newCa.setTitle(s.toString());
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                CAModel caModel = CAModel.get(getActivity());
-                caModel.updateCa(newCa);
-            }
-
-        });
-        sSubjectField = (EditText) v.findViewById(R.id.ca_subject);
-        sSubjectField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                newCa.setSubject(s.toString());
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                CAModel caModel = CAModel.get(getActivity());
-                caModel.updateCa(newCa);
-            }
-
-        });
-
-        sLecturerField = (EditText) v.findViewById(R.id.ca_Lecturer);
-        sLecturerField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                newCa.setLecturer(s.toString());
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                CAModel caModel = CAModel.get(getActivity());
-                caModel.updateCa(newCa);
-            }
-
-        });
-
-        sDetailsField = (EditText) v.findViewById(R.id.ca_details);
-        sDetailsField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                newCa.setDetails(s.toString());
-
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                CAModel caModel = CAModel.get(getActivity());
-                caModel.updateCa(newCa);
-            }
-
-        });
-
-
-
-
-        //Button brings the application back one stpoe in the stack, returning to the full list
-        Button saveButton = (Button) v.findViewById(R.id.save_button);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            //return to previous fragment
-            public void onClick(View v) {
-                getActivity().getSupportFragmentManager().popBackStack();
-                //toast message to twll user that the changes entered before pressing the button were saved
-                Toast.makeText(getContext(),"Changes Saved",Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        //populates fields for editing
-        if (newCa != null) {
-            sTitleField.setText(newCa.getTitle());
-            sLecturerField.setText(newCa.getLecturer());
-            sSubjectField.setText(newCa.getSubject());
-            sDetailsField.setText(newCa.getDetails());
+        if (newCa == null) {
+            final Button dueDateButton = (Button) v.findViewById(R.id.ca_due_date);
             dueDateButton.setText(newCa.getDue_date().toString());
+            dueDateButton.setEnabled(true);
+            dueDateButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final DatePicker dp = new DatePicker(getActivity());
+                    new AlertDialog.Builder(getActivity())
+                            .setView(dp)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dueDateButton.setText(dp.getDayOfMonth() + "/" + dp.getMonth() + "/" + dp.getYear());
+                                    dialog.dismiss();
+                                }
+                            })
+                            .create()
+                            .show();
+                }
+            });
+
+            reportCheckBox = (CheckBox) v.findViewById(R.id.report_required);
+            reportCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    newCa.setReport(isChecked);
+                }
+            });
+//finds each element base don id, listens for changes to text, sets the text entry to the field of the newCa object
+            sTitleField = (EditText) v.findViewById(R.id.ca_title);
+            sTitleField.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    newCa.setTitle(s.toString());
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    CAModel caModel = CAModel.get(getActivity());
+                    caModel.updateCa(newCa);
+                }
+
+            });
+            sSubjectField = (EditText) v.findViewById(R.id.ca_subject);
+            sSubjectField.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    newCa.setSubject(s.toString());
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    CAModel caModel = CAModel.get(getActivity());
+                    caModel.updateCa(newCa);
+                }
+
+            });
+
+            sLecturerField = (EditText) v.findViewById(R.id.ca_Lecturer);
+            sLecturerField.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    newCa.setLecturer(s.toString());
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    CAModel caModel = CAModel.get(getActivity());
+                    caModel.updateCa(newCa);
+                }
+
+            });
+
+            sDetailsField = (EditText) v.findViewById(R.id.ca_details);
+            sDetailsField.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    newCa.setDetails(s.toString());
+
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    CAModel caModel = CAModel.get(getActivity());
+                    caModel.updateCa(newCa);
+                }
+
+            });
+
+
+            //Button brings the application back one stpoe in the stack, returning to the full list
+            Button saveButton = (Button) v.findViewById(R.id.save_button);
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                //return to previous fragment
+                public void onClick(View v) {
+                    getActivity().getSupportFragmentManager().popBackStack();
+                    //toast message to twll user that the changes entered before pressing the button were saved
+                    Toast.makeText(getContext(), "Changes Saved", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
+            //populates fields for editing
+            if (newCa != null) {
+                sTitleField.setText(newCa.getTitle());
+                sLecturerField.setText(newCa.getLecturer());
+                sSubjectField.setText(newCa.getSubject());
+                sDetailsField.setText(newCa.getDetails());
+                dueDateButton.setText(newCa.getDue_date().toString());
+            }
+
+
         }
 
         return v;

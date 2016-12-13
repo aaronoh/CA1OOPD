@@ -33,7 +33,7 @@ public class CAModel {
         //returns db object, run queries on object
         mDatabase = mDbHelper.getWritableDatabase();
         //seed list of crimes
-       // seedDatabase();
+        // seedDatabase();
         this.mCasList = getCas();
     }
 
@@ -58,8 +58,8 @@ public class CAModel {
 
         ArrayList<Cas> cas = new ArrayList<>();
         //check catable for definition of TABLE_CA and ALL_COLLUMNS
-       // Cursor cursor = mDatabase.query(CaTable.TABLE_CA, CaTable.ALL_COLUMNS, null, null, null, null, null);
-        Cursor cursor = mDatabase.rawQuery("SELECT * FROM "+CaTable.TABLE_CA, null);
+        // Cursor cursor = mDatabase.query(CaTable.TABLE_CA, CaTable.ALL_COLUMNS, null, null, null, null, null);
+        Cursor cursor = mDatabase.rawQuery("SELECT * FROM " + CaTable.TABLE_CA, null);
 
         //cursor = list of rows from db
         while (cursor.moveToNext()) {
@@ -83,9 +83,9 @@ public class CAModel {
         cursor.close();
         return cas;
     }
-    //seed database with unique titles and Subject/Lecturer/Details/Current Date
+    //seed database with unique titles and Subject/Lecturer/Details/Current Date - Not needed now that add works
 
-//    public void seedDatabase() {
+    //    public void seedDatabase() {
 //        Cas ca = new Cas();
 //        for (int i = 50; i < 60; i++) {
 //            ca.setMyId(i);
@@ -107,12 +107,15 @@ public class CAModel {
 //    }
 //insert ca into db
     public Cas createCas(Cas ca) {
+        //add to local array list -avoid index out of bounds exception on click after adding
+        mCasList.add(ca);
         ContentValues values = ca.toValues();
         long id = mDatabase.insert(CaTable.TABLE_CA, null, values);
         ca.setMyId(id);
         return ca;
     }
-        //find numeric position in list for ca
+
+    //find numeric position in list for ca
     public Cas getCa(int position) {
         return this.mCasList.get(position);
     }
@@ -120,6 +123,6 @@ public class CAModel {
 
     public void updateCa(Cas ca) {
         ContentValues values = ca.toValues();
-        long result = mDatabase.update(CaTable.TABLE_CA, values, "id = ?", new String []{String.valueOf(ca.getMyId())});
+        long result = mDatabase.update(CaTable.TABLE_CA, values, "id = ?", new String[]{String.valueOf(ca.getMyId())});
     }
 }

@@ -23,12 +23,12 @@ public class CaDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CaTable.TABLE_CREATE);
-        Log.d(tag,CaTable.TABLE_CREATE);
+        Log.d(tag, CaTable.TABLE_CREATE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    db.execSQL("DROP TABLE IF EXISTS " + CaTable.TABLE_CA);
+        db.execSQL("DROP TABLE IF EXISTS " + CaTable.TABLE_CA);
         onCreate(db);
     }
 }

@@ -48,7 +48,7 @@ public class CAListFragment extends ListFragment {
             }
             //configuring view for individual ca
             Cas c = getItem(position);
-       // getting fielkds/values
+            // getting fielkds/values
             TextView titleTextView = (TextView) convertView.findViewById(R.id.ca_list_item_titleTextView);
             titleTextView.setText(c.getTitle());
 
@@ -99,9 +99,10 @@ public class CAListFragment extends ListFragment {
     }
 
     public void updateUI() {
+        //retrieving cas from model(database)
         CAModel caModel = CAModel.get(getActivity());
         ArrayList<Cas> mCas = caModel.getCas();
-
+        //sets list adapter with new data
         adapter = new CaAdapter(mCas);
         setListAdapter(adapter);
     }

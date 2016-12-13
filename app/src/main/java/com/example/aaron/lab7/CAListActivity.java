@@ -18,22 +18,37 @@ public class CAListActivity extends SingleFragmentActivity {
         return new CAListFragment();
     }
 
-//al
+
+    @Override
+    public void onBackPressed() {
+        //if theres already something in the backsstack, go to it
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            //otherwise normal behaviour of back button
+            super.onBackPressed();
+        }
+    }
+
+    //add button
     FloatingActionButton floatingActionButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //Action Bar
         getSupportActionBar().setTitle("CA List");
         setContentView(R.layout.activity_fragment);
+        //functionality for add button
         floatingActionButton = (FloatingActionButton) findViewById(R.id.add_Button);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager()
                         .beginTransaction()
+                        //-1 for invalid id, creates new
                         .replace(R.id.fragmentContainer, CAFragment.newInstance(-1))
+                        //add to back stack allows for navigation to previous fragment
                         .addToBackStack(null)
                         .commit();
             }

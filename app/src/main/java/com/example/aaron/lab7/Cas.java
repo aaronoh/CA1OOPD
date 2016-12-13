@@ -10,7 +10,7 @@ import java.util.UUID;
  */
 
 public class Cas {
-    private int myId;
+    private long myId;
     private String mTitle;
     private String mSubject;
     private String mLecturer;
@@ -23,11 +23,11 @@ public class Cas {
     }
 
     //getters and setters
-    public int getMyId() {
+    public long getMyId() {
         return myId;
     }
 
-    public void setMyId(int myId) {
+    public void setMyId(long myId) {
         this.myId = myId;
     }
 
@@ -98,7 +98,7 @@ public class Cas {
     public ContentValues toValues() {
         ContentValues values = new ContentValues(7);
 
-        values.put(CaTable.CA_ID, myId);
+        //values.put(CaTable.CA_ID, myId);
         values.put(CaTable.COLUMN_TITLE, mTitle);
         values.put(CaTable.COLUMN_SUBJECT, mSubject);
         values.put(CaTable.COLUMN_LECTURER, mLecturer);

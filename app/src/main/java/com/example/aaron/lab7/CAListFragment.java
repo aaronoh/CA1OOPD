@@ -73,6 +73,8 @@ public class CAListFragment extends ListFragment {
 
 
     public void onListItemClick(ListView l, View v, int position, long id) {
+
+        //Update
         //Bundle -> Passing data between activities
         Bundle bundle = new Bundle();
         bundle.putInt(CAFragment.EXTRA_CA_ID, position);

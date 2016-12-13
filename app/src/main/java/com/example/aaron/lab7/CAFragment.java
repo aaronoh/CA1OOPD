@@ -69,8 +69,6 @@ public class CAFragment extends Fragment implements View.OnClickListener {
         sSubjectField = (EditText) v.findViewById(R.id.ca_subject);
         sLecturerField = (EditText) v.findViewById(R.id.ca_Lecturer);
         sDetailsField = (EditText) v.findViewById(R.id.ca_details);
-
-        // TODO: Look here at your layout file
         dueDateButton = (Button) v.findViewById(R.id.ca_due_date);
         dueDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,8 +132,9 @@ public class CAFragment extends Fragment implements View.OnClickListener {
             savedCa.setReport(reportCheckBox.isChecked());
             savedCa.setDetails(sDetailsField.getText().toString());
             caModel.updateCa(savedCa);
-        }
 
+
+        }
         else {
             Toast.makeText(getContext(), "CA Added", Toast.LENGTH_SHORT).show();
             Cas ca = new Cas();
@@ -151,13 +150,13 @@ public class CAFragment extends Fragment implements View.OnClickListener {
             if (d != null) {
                 ca.setDue_date(d);
             }
-            ca.setTitle(ca.getTitle());
-            savedCa.setSubject(sSubjectField.getText().toString());
+
+            ca.setTitle(sTitleField.getText().toString());
+            ca.setSubject(sSubjectField.getText().toString());
             ca.setLecturer(sLecturerField.getText().toString());
             ca.setReport(reportCheckBox.isChecked());
             ca.setDetails(sDetailsField.getText().toString());
-            //caModel.add(ca);
-            // need to create add method in model
+            caModel.createCas(ca);
         }
         getActivity().getSupportFragmentManager().popBackStack();
     }

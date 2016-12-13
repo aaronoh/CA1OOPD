@@ -33,7 +33,7 @@ public class CAModel {
         //returns db object, run queries on object
         mDatabase = mDbHelper.getWritableDatabase();
         //seed list of crimes
-        seedDatabase();
+       // seedDatabase();
         this.mCasList = getCas();
     }
 
@@ -58,7 +58,8 @@ public class CAModel {
 
         ArrayList<Cas> cas = new ArrayList<>();
         //check catable for definition of TABLE_CA and ALL_COLLUMNS
-        Cursor cursor = mDatabase.query(CaTable.TABLE_CA, CaTable.ALL_COLUMNS, null, null, null, null, null);
+       // Cursor cursor = mDatabase.query(CaTable.TABLE_CA, CaTable.ALL_COLUMNS, null, null, null, null, null);
+        Cursor cursor = mDatabase.rawQuery("SELECT * FROM "+CaTable.TABLE_CA, null);
 
         //cursor = list of rows from db
         while (cursor.moveToNext()) {
@@ -84,30 +85,31 @@ public class CAModel {
     }
     //seed database with unique titles and Subject/Lecturer/Details/Current Date
 
-    public void seedDatabase() {
-        Cas ca = new Cas();
-        for (int i = 50; i < 60; i++) {
-            ca.setMyId(i);
-            ca.setTitle("Ca Title" + i);
-            ca.setSubject("Ca Subject");
-            ca.setLecturer("Ca Lecturer");
-            ca.setDetails("Details of CA Requirements");
-            ca.setReport(i % 2 == 0);
-            Date date = new Date();
-            ca.setDue_date(date);
-
-            try {
-                createCas(ca);
-            } catch (SQLiteException e) {
-                e.printStackTrace();
-            }
-            //mCas.add(ca);
-        }
-    }
+//    public void seedDatabase() {
+//        Cas ca = new Cas();
+//        for (int i = 50; i < 60; i++) {
+//            ca.setMyId(i);
+//            ca.setTitle("Ca Title" + i);
+//            ca.setSubject("Ca Subject");
+//            ca.setLecturer("Ca Lecturer");
+//            ca.setDetails("Details of CA Requirements");
+//            ca.setReport(i % 2 == 0);
+//            Date date = new Date();
+//            ca.setDue_date(date);
+//
+//            try {
+//                createCas(ca);
+//            } catch (SQLiteException e) {
+//                e.printStackTrace();
+//            }
+//            //mCas.add(ca);
+//        }
+//    }
 //insert ca into db
     public Cas createCas(Cas ca) {
         ContentValues values = ca.toValues();
-        mDatabase.insert(CaTable.TABLE_CA, null, values);
+        long id = mDatabase.insert(CaTable.TABLE_CA, null, values);
+        ca.setMyId(id);
         return ca;
     }
         //find numeric position in list for ca

@@ -19,6 +19,9 @@ import android.widget.Toast;
 
 import java.util.Date;
 
+import static android.R.attr.button;
+import static com.example.aaron.lab7.R.styleable.CompoundButton;
+
 /**
  * Created by Aaron on 09/11/2016.
  */
@@ -33,6 +36,7 @@ public class CAFragment extends Fragment implements View.OnClickListener {
     private CheckBox reportCheckBox;
     private Button saveButton;
     Button dueDateButton;
+    Button deleteButton;
 
     public static CAFragment newInstance(int position) {
         //allows for passing of position to new fragment
@@ -59,17 +63,18 @@ public class CAFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_ca, parent, false);
 
-
         //Button brings the application back one step in the stack, returning to the full list
         saveButton = (Button) v.findViewById(R.id.save_button);
         saveButton.setOnClickListener(this);
-        reportCheckBox = (CheckBox) v.findViewById(R.id.report_required);
-//finds each element based on id, listens for changes to text, sets the text entry to the field of the savedCa object
+        //finds each element based on id, listens for changes to text, sets the text entry to the field of the savedCa object
         sTitleField = (EditText) v.findViewById(R.id.ca_title);
         sSubjectField = (EditText) v.findViewById(R.id.ca_subject);
         sLecturerField = (EditText) v.findViewById(R.id.ca_Lecturer);
         sDetailsField = (EditText) v.findViewById(R.id.ca_details);
         dueDateButton = (Button) v.findViewById(R.id.ca_due_date);
+        reportCheckBox = (CheckBox) v.findViewById(R.id.report_required);
+
+
         //Date picker contained within an Alert Dialouge
         dueDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,10 +86,14 @@ public class CAFragment extends Fragment implements View.OnClickListener {
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             //sets chosen date as text on button
-                            //*********************************************************************************************************************************************************//
-                            //This is the only place that the added/updated date can be seen, it is not (currently) being displayed in the full list view/being added to the daatabase //
-                            //********************************************************************************************************************************************************//
+
+                            // *************************************************************************************//
+                            //This is the only place that the added/updated date can be seen, it is not (currently)//
+                            // being displayed in the full list view/being added to the daatabase                  //
+                            //************************************************************************************//
+
                             public void onClick(DialogInterface dialog, int which) {
+                                //default month count starts at 0, first month is 1, not 0
                                 dueDateButton.setText(dp.getDayOfMonth() + "/" + (dp.getMonth() + 1) + "/" + dp.getYear());
                                 dialog.dismiss();
                             }
@@ -92,6 +101,8 @@ public class CAFragment extends Fragment implements View.OnClickListener {
                         //creating & displaying the alert dialouge
                         .create()
                         .show();
+
+
             }
         });
 
@@ -103,6 +114,7 @@ public class CAFragment extends Fragment implements View.OnClickListener {
             sSubjectField.setText(savedCa.getSubject());
             sDetailsField.setText(savedCa.getDetails());
             dueDateButton.setText(savedCa.getDue_date().toString());
+            reportCheckBox.setChecked(savedCa.getReport());
             saveButton.setText("Update CA");
         }
         //otherwise it sets a blank date format indicator on the date picker button & sets the text on the 'Update CA' button to 'Create CA', as it is a new CA
@@ -111,8 +123,20 @@ public class CAFragment extends Fragment implements View.OnClickListener {
             saveButton.setText("Create CA");
         }
 
+        deleteButton = (Button) v.findViewById(R.id.delete_Button);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CAModel caModel = CAModel.get(getActivity());
+                Toast.makeText(getContext(), "Delete", Toast.LENGTH_SHORT).show();
+                caModel.deleteCa(savedCa.getMyId());
+            }
+        });
+
         return v;
     }
+
+
 
     //date parsing method requires this build on android
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -156,7 +180,7 @@ public class CAFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(getContext(), "CA Added", Toast.LENGTH_SHORT).show();
             //since its a new ca, not an update, make a new cas object
             Cas ca = new Cas();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
             //date parsing
             Date d = null;
             try {
@@ -174,6 +198,11 @@ public class CAFragment extends Fragment implements View.OnClickListener {
             ca.setSubject(sSubjectField.getText().toString());
             ca.setLecturer(sLecturerField.getText().toString());
             ca.setReport(reportCheckBox.isChecked());
+            //************************************************//
+            //Checkbox values are being saved in the arraylist, if I had time I would write code that would set a variable
+            // to the value 0 or 1 based on the true/false value of isChecked, I would then save those ints to the database.
+            // When reading from the database I'd reverse that if statement, if x = 0 checked = false.
+            //***********************************************//
             ca.setDetails(sDetailsField.getText().toString());
             //add method to add to database & arraylist
             caModel.createCas(ca);
@@ -182,4 +211,5 @@ public class CAFragment extends Fragment implements View.OnClickListener {
         //return to full list
         getActivity().getSupportFragmentManager().popBackStack();
     }
+
 }

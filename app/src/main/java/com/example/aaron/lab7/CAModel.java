@@ -12,6 +12,8 @@ import java.sql.SQLData;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static com.example.aaron.lab7.CaTable.CA_ID;
+
 /**
  * Created by aaron on 16/11/2016.
  */
@@ -64,7 +66,7 @@ public class CAModel {
         //cursor = list of rows from db
         while (cursor.moveToNext()) {
             Cas ca = new Cas();
-            ca.setMyId(cursor.getInt(cursor.getColumnIndex(CaTable.CA_ID)));
+            ca.setMyId(cursor.getInt(cursor.getColumnIndex(CA_ID)));
 
             ca.setTitle(cursor.getString(cursor.getColumnIndex(CaTable.COLUMN_TITLE)));
 
@@ -124,5 +126,9 @@ public class CAModel {
     public void updateCa(Cas ca) {
         ContentValues values = ca.toValues();
         long result = mDatabase.update(CaTable.TABLE_CA, values, "id = ?", new String[]{String.valueOf(ca.getMyId())});
+    }
+
+    public boolean deleteCa(long rowId) {
+        return mDatabase.delete(CaTable.TABLE_CA, CA_ID + "=" + rowId, null) > 0;
     }
 }

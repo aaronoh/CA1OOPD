@@ -128,8 +128,16 @@ public class CAFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 CAModel caModel = CAModel.get(getActivity());
-                Toast.makeText(getContext(), "Delete", Toast.LENGTH_SHORT).show();
-                caModel.deleteCa(savedCa.getMyId());
+                //if the ca exists, delete it
+                if(savedCa != null) {
+                    caModel.deleteCa(savedCa);
+                }
+                //otherwise tell user there is nothing to delete
+                else{
+                    Toast.makeText(getContext(), "No CA to Delete", Toast.LENGTH_SHORT).show();
+                }
+                //return to main list
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 

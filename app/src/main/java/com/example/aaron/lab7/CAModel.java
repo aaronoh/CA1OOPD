@@ -128,7 +128,7 @@ public class CAModel {
         long result = mDatabase.update(CaTable.TABLE_CA, values, "id = ?", new String[]{String.valueOf(ca.getMyId())});
     }
 
-    public boolean deleteCa(long rowId) {
-        return mDatabase.delete(CaTable.TABLE_CA, CA_ID + "=" + rowId, null) > 0;
+    public void deleteCa(Cas ca) {
+        long result = mDatabase.delete(CaTable.TABLE_CA, "id = ?", new String[] {String.valueOf(ca.getMyId())});
     }
 }

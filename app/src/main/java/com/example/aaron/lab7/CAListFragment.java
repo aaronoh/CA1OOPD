@@ -55,8 +55,8 @@ public class CAListFragment extends ListFragment {
             TextView dateTextView = (TextView) convertView.findViewById(R.id.ca_list_item_dateTextView);
             dateTextView.setText(c.getDue_date().toString());
 
-            CheckBox reportChecBox = (CheckBox) convertView.findViewById(R.id.ca_list_item_reportCheckbox);
-            reportChecBox.setChecked(c.getReport());
+//            CheckBox reportChecBox = (CheckBox) convertView.findViewById(R.id.ca_list_item_reportCheckbox);
+//            reportChecBox.setChecked(c.getReport());
 
             TextView subjectTextView = (TextView) convertView.findViewById(R.id.ca_list_item_subjectTextView);
             subjectTextView.setText(c.getSubject());

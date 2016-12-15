@@ -2,7 +2,10 @@ package com.example.aaron.lab7;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.icu.text.SimpleDateFormat;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -129,11 +132,11 @@ public class CAFragment extends Fragment implements View.OnClickListener {
             public void onClick(View v) {
                 CAModel caModel = CAModel.get(getActivity());
                 //if the ca exists, delete it
-                if(savedCa != null) {
+                if (savedCa != null) {
                     caModel.deleteCa(savedCa);
                 }
                 //otherwise tell user there is nothing to delete
-                else{
+                else {
                     Toast.makeText(getContext(), "No CA to Delete", Toast.LENGTH_SHORT).show();
                 }
                 //return to main list
@@ -145,9 +148,6 @@ public class CAFragment extends Fragment implements View.OnClickListener {
     }
 
 
-
-    //date parsing method requires this build on android
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     //on click for Update/Create button
     public void onClick(View v) {
@@ -188,7 +188,7 @@ public class CAFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(getContext(), "CA Added", Toast.LENGTH_SHORT).show();
             //since its a new ca, not an update, make a new cas object
             Cas ca = new Cas();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             //date parsing
             Date d = null;
             try {

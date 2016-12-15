@@ -130,6 +130,6 @@ public class CAModel {
 
     public void deleteCa(Cas ca) {
         mCasList.remove(ca);
-        long result = mDatabase.delete(CaTable.TABLE_CA, "id = ?", new String[] {String.valueOf(ca.getMyId())});
+        long result = mDatabase.delete(CaTable.TABLE_CA, "id = ?", new String[]{String.valueOf(ca.getMyId())});
     }
 }
